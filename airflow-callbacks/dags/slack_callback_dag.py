@@ -48,7 +48,7 @@ with DAG(
     bash_fail = BashOperator(
         task_id='bash_fail',
         retries=1,
-        bash_command='abc'  # Task will retry before failing to showcase on_retry_callback
+        bash_command='exit 123'  # Task will retry before failing to showcase on_retry_callback
     )
 
     dummy_dag_success = DummyOperator(
