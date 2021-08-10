@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54cae602-0999-40e7-9e87-7d766dd5e507" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dags/end_of_deployment_1/end_of_deployment_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/end_of_deployment_1/end_of_deployment_1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dags/end_of_deployment_1/sql/trigger_next.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dags/end_of_deployment_1/sql/trigger_next.sql" afterDir="false" />

@@ -41,7 +41,7 @@ with DAG(dag_id='start_of_deployment_2', start_date=datetime(2021, 8, 9), schedu
         task_id=f"check_using_python_sensor",
         python_callable=my_func,
         op_kwargs={
-            'result': False
+            'result': True
         },
         mode='reschedule' #see notes above
         # poke_interval=3 * 60,  # checks transfer status every three minutes
