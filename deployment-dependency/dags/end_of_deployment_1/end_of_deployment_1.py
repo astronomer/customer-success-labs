@@ -9,10 +9,9 @@ def pg_task(query_name):
     return PostgresOperator(
         task_id=query_name,
         sql="sql/{0}.sql".format(query_name),
-        postgres_conn_id='redshift_warehouse',
+        postgres_conn_id='my_data_warehouse',
         params={'login': conn.login, 'password': conn.password}
     )
-
 
 with DAG(dag_id='end_of_deployment_1', start_date=datetime(2021, 8, 9), schedule_interval=None, max_active_runs=1, catchup=False) as dag:
 
