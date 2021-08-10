@@ -1,11 +1,11 @@
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.hooks.S3_hook import S3Hook
+from airflow.hooks.base_hook import BaseHook
 from airflow.operators.postgres_operator import PostgresOperator
 
 def pg_task(query_name):
-    conn = S3Hook.get_connection(conn_id='s3_default')
+    conn = BaseHook.get_connection("my_data_warehouse")
     return PostgresOperator(
         task_id=query_name,
         sql="sql/{0}.sql".format(query_name),
