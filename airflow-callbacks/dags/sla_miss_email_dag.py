@@ -6,37 +6,40 @@ from datetime import datetime, timedelta
 
 # Default settings applied to all tasks
 default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'email_on_failure': True,
-    'email': 'youremail@here.com',
-    'email_on_retry': True,
-    'retries': 1,
-    'retry_delay': timedelta(seconds=5),
-    'sla': timedelta(seconds=30)
+    "owner": "airflow",
+    "depends_on_past": False,
+    "email_on_failure": True,
+    "email": "youremail@here.com",
+    "email_on_retry": True,
+    "retries": 1,
+    "retry_delay": timedelta(seconds=5),
+    "sla": timedelta(seconds=30),
 }
 
 # Using a DAG context manager, you don't have to specify the dag property of each task
-with DAG('sla_miss_email',
-         start_date=datetime(2021, 8, 5),
-         max_active_runs=1,
-         schedule_interval=timedelta(minutes=2),  # https://airflow.apache.org/docs/stable/scheduler.html#dag-runs
-         default_args=default_args,
-         catchup=False
-         ) as dag:
+with DAG(
+    "sla_miss_email",
+    start_date=datetime(2021, 8, 5),
+    max_active_runs=1,
+    schedule_interval=timedelta(
+        minutes=2
+    ),  # https://airflow.apache.org/docs/stable/scheduler.html#dag-runs
+    default_args=default_args,
+    catchup=False,
+) as dag:
     dummy_success_test = DummyOperator(
-        task_id='dummy_success_test',
+        task_id="dummy_success_test",
     )
 
     bash_sleep = BashOperator(
-        task_id='bash_sleep',
-        bash_command='sleep 30'  # Task will sleep to showcase sla_miss callback
+        task_id="bash_sleep",
+        bash_command="sleep 30",  # Task will sleep to showcase sla_miss callback
     )
 
     bash_fail = BashOperator(
-        task_id='bash_fail',
+        task_id="bash_fail",
         retries=1,
-        bash_command='exit 123'  # Task will retry before failing to showcase on_retry_callback
+        bash_command="exit 123",  # Task will retry before failing to showcase on_retry_callback
     )
 
     dummy_success_test >> bash_sleep >> bash_fail

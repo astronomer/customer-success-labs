@@ -4,7 +4,7 @@ from airflow.operators.python import get_current_context
 
 
 def dag_triggered_callback(context):
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             DAG has been triggered.
             Task: {context.get('task_instance').task_id}  
@@ -18,12 +18,13 @@ def dag_triggered_callback(context):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
 def dag_success_callback(context):
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             DAG has succeeded.
             Task: {context.get('task_instance').task_id}  
@@ -37,12 +38,13 @@ def dag_success_callback(context):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
 def success_callback(context):
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             Task has succeeded. 
             Task: {context.get('task_instance').task_id}  
@@ -56,12 +58,13 @@ def success_callback(context):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
 def failure_callback(context):
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             Task has failed. 
             Task: {context.get('task_instance').task_id}  
@@ -76,12 +79,13 @@ def failure_callback(context):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
 def retry_callback(context):
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             Task is retrying. 
             Task: {context.get('task_instance').task_id}
@@ -97,13 +101,14 @@ def retry_callback(context):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
 def python_operator_callback(**kwargs):
     context = get_current_context()
-    log_url = context.get('task_instance').log_url
+    log_url = context.get("task_instance").log_url
     teams_msg = f"""
             This is a test for sending a MS Teams message via a PythonOperator.
             Task: {context.get('task_instance').task_id}  
@@ -117,7 +122,8 @@ def python_operator_callback(**kwargs):
         button_text="View log",
         button_url=log_url,
         theme_color="FF0000",
-        http_conn_id='ms_teams_callbacks')
+        http_conn_id="ms_teams_callbacks",
+    )
     return teams_notification.execute(context)
 
 
