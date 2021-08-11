@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="54cae602-0999-40e7-9e87-7d766dd5e507" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dags/end_of_deployment_1/end_of_deployment_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/end_of_deployment_1/end_of_deployment_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dags/end_of_deployment_1/sql/trigger_next.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dags/end_of_deployment_1/sql/trigger_next.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dags/start_of_deployment_2/start_of_deployment_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/start_of_deployment_2/start_of_deployment_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,5 +55,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

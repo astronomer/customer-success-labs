@@ -2,3 +2,4 @@
 .env
 .idea
 airflow_settings.yaml
+*/workspace.xml

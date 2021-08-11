@@ -7,8 +7,8 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.latest_only import LatestOnlyOperator
 from datetime import datetime
 
-from lib.aws_tools.s3_automation import S3Tools
-from lib.sql_tools.rds_postgres import RDS
+from util.aws_tools.s3_automation import S3Tools
+from util.sql_tools.rds_postgres import RDS
 
 wd = pathlib.Path(__file__).parent.resolve()
 sql_files = [str(os.path.basename(f)).replace('.sql', '') for f in glob.glob(f"{wd}/sql/*.sql")]
