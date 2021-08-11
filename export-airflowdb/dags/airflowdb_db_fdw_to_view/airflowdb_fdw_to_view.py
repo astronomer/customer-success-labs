@@ -10,8 +10,8 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.latest_only import LatestOnlyOperator
 
-from lib.sql_tools.rds_postgres import RDS
-from lib.sql_tools.query_builder import all_logs, all_taskinstances
+from util.sql_tools.rds_postgres import RDS
+from util.sql_tools.query_builder import all_logs, all_taskinstances
 
 wd = pathlib.Path(__file__).parent.resolve()
 
