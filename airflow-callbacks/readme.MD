@@ -30,7 +30,7 @@ In order to run these demos on your localhost, be sure to install:
 
 ### Executing demos
 
-Clone this repository, then navigate to the ```airflow_callbacks``` directory and start your local Airflow instance:
+Clone this repository, then navigate to the ```airflow-callbacks``` directory and start your local Airflow instance:
 ```
 astro dev start
 ```
