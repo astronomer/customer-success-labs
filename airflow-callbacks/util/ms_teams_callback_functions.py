@@ -1,6 +1,7 @@
 from operators.ms_teams_webhook_operator import MSTeamsWebhookOperator
 from hooks.ms_teams_webhook_hook import MSTeamsWebhookHook
 from airflow.operators.python import get_current_context
+import traceback
 
 
 def dag_triggered_callback(context):
@@ -65,12 +66,18 @@ def success_callback(context):
 
 def failure_callback(context):
     log_url = context.get("task_instance").log_url
+    exception = context.get('exception')
+    formatted_exception = ''.join(
+        traceback.format_exception(etype=type(exception),
+                                   value=exception,
+                                   tb=exception.__traceback__)
+    ).strip()
     teams_msg = f"""
             Task has failed. 
             Task: {context.get('task_instance').task_id}  
             Dag: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}
-            Exception: {context.get('exception')}
+            Exception: {formatted_exception}
             """
     teams_notification = MSTeamsWebhookOperator(
         task_id="ms_teams_callback",
@@ -86,13 +93,19 @@ def failure_callback(context):
 
 def retry_callback(context):
     log_url = context.get("task_instance").log_url
+    exception = context.get('exception')
+    formatted_exception = ''.join(
+        traceback.format_exception(etype=type(exception),
+                                   value=exception,
+                                   tb=exception.__traceback__)
+    ).strip()
     teams_msg = f"""
             Task is retrying. 
             Task: {context.get('task_instance').task_id}
             Try number: {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}.
             Dag: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
-            Exception: {context.get('exception')}
+            Exception: {formatted_exception}
             """
     teams_notification = MSTeamsWebhookOperator(
         task_id="ms_teams_callback",
