@@ -2,6 +2,7 @@ from airflow.providers.slack.operators.slack_webhook import SlackWebhookOperator
 from airflow.providers.slack.hooks.slack_webhook import SlackWebhookHook
 from airflow.hooks.base import BaseHook
 from airflow.operators.python import get_current_context
+import traceback
 
 """
 Follow Option #2 outlined here https://medium.com/datareply/integrating-slack-alerts-in-airflow-c9dcd155105
@@ -76,14 +77,20 @@ def failure_callback(context, **kwargs):
     slack_conn_id = kwargs["http_conn_id"]
     slack_webhook_token = BaseHook.get_connection(slack_conn_id).password
     log_url = context.get("task_instance").log_url
+    exception = context.get('exception')
+    formatted_exception = ''.join(
+        traceback.format_exception(etype=type(exception),
+                                   value=exception,
+                                   tb=exception.__traceback__)
+    ).strip()
     slack_msg = f"""
-            :x: Task has failed. 
-            *Task*: {context.get('task_instance').task_id}
-            *Dag*: {context.get('task_instance').dag_id} 
-            *Execution Time*: {context.get('execution_date')}  
-            *Exception*: {context.get('exception')}
-            <{log_url}| *Log URL*>
-            """
+                :x: Task has failed. 
+                *Task*: {context.get('task_instance').task_id}
+                *Dag*: {context.get('task_instance').dag_id} 
+                *Execution Time*: {context.get('execution_date')}  
+                *Exception*: {formatted_exception}
+                <{log_url}| *Log URL*>
+                """
     slack_alert = SlackWebhookOperator(
         task_id="slack_test",
         http_conn_id=slack_conn_id,
@@ -98,15 +105,21 @@ def retry_callback(context, **kwargs):
     slack_conn_id = kwargs["http_conn_id"]
     slack_webhook_token = BaseHook.get_connection(slack_conn_id).password
     log_url = context.get("task_instance").log_url
+    exception = context.get('exception')
+    formatted_exception = ''.join(
+        traceback.format_exception(etype=type(exception),
+                                   value=exception,
+                                   tb=exception.__traceback__)
+    ).strip()
     slack_msg = f"""
-            :sos: Task is retrying.
-            *Task*: {context.get('task_instance').task_id}
-            *Try number:* {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}. 
-            *Dag*: {context.get('task_instance').dag_id}
-            *Execution Time*: {context.get('execution_date')}
-            *Exception*: {context.get('exception')}
-            <{log_url}| *Log URL*>
-            """
+                :sos: Task is retrying.
+                *Task*: {context.get('task_instance').task_id}
+                *Try number:* {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}. 
+                *Dag*: {context.get('task_instance').dag_id}
+                *Execution Time*: {context.get('execution_date')}
+                *Exception*: {formatted_exception}
+                <{log_url}| *Log URL*>
+                """
     slack_alert = SlackWebhookOperator(
         task_id="slack_test",
         http_conn_id=slack_conn_id,
