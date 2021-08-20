@@ -42,6 +42,10 @@ In your browser, navigate to ```http://localhost:8080/```
 * Password: ```admin```
 
 
+### Setting up Slack/Teams Connections
+In order to receive callback notifications, you must also create your webhooks and set up your connections in the Airflow UI. follow the instructions found in the [Appendix section](https://docs.google.com/presentation/d/1lnu3IfM82I09yK7XuzGcroDNMlZpqs-3nARDCWpfaDI/edit#slide=id.ge7d1e4d78d_2_3) of the accompanying slide deck.
+
+
 ## Additional Resources
 
 * [Notifications Overview Slides](https://docs.google.com/presentation/d/1lnu3IfM82I09yK7XuzGcroDNMlZpqs-3nARDCWpfaDI/edit?usp=sharing)
