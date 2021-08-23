@@ -15,13 +15,24 @@ from util.sql_tools.query_builder import all_logs, all_taskinstances
 
 wd = pathlib.Path(__file__).parent.resolve()
 
+def _create_master_metadb_if_not_exists(db_name):
+    rds_tool = RDS()
+    exists = rds_tool._check_if_db_exists(db_name)
+    sql = f"CREATE DATABASE {db_name} WITH OWNER postgres;"
+    if exists is True:
+        print("Database already exists...skipping.")
+    else:
+        print("Database doesn't exist...creating.")
+        rds_tool._execute_sql(sql)
+
 def _create_dynamic_view(view_name, query, ds):
     rds_tool = RDS()
     db_list = rds_tool._get_databases()
     rds_tool._drop_view(view_name=view_name)
     sql = """"""
     sql += "begin transaction;\n"
-    sql += f"create view public.{view_name} as ("
+    sql += "create schema if not exists metadata;\n"
+    sql += f"create view metadata.{view_name} as ("
     counter = 0
     for db in db_list:
         if counter == 0:
@@ -31,14 +42,14 @@ def _create_dynamic_view(view_name, query, ds):
         counter = counter+1
     sql += ");\n"
     sql += "end transaction;"
-    # print(sql)
-    rds_tool._execute_sql(sql=sql)
+    print(sql)
+    rds_tool._execute_sql(sql=sql, dbname="airflow_master_metadb")
 
 def _fdw_task():
     rds_tool = RDS()
     log = logging.getLogger('psycopg2 logger:')
     con_params = BaseHook.get_connection("rds_instance")
-    connection = rds_tool._db_connect("postgres")
+    connection = rds_tool._db_connect("airflow_master_metadb")
     connection.autocommit = False
     cursor = connection.cursor()
     fd = open(f"{wd}/sql/create_fdw.sql")
@@ -64,12 +75,21 @@ with DAG(
     "airflow_db_fdw_to_view",
     start_date=datetime(2021, 8, 3),
     max_active_runs=1,
-    schedule_interval="@daily"
+    schedule_interval="@daily",
+    catchup=False
 ) as dag:
 
     start = DummyOperator(task_id='start')
     end = DummyOperator(task_id='end')
     latest_only = LatestOnlyOperator(task_id='latest_only')
+
+    create_master_metadb = PythonOperator(
+        task_id='create_master_metadb',
+        python_callable=_create_master_metadb_if_not_exists,
+        op_kwargs={
+            'db_name': 'airflow_master_metadb'
+        }
+    )
 
     create_fdw = PythonOperator(
         task_id='create_fdw',
@@ -97,4 +117,4 @@ with DAG(
         }
     )
 
-    latest_only >> start >> create_fdw >> t1 >> t2 >> end
+    latest_only >> start >> create_master_metadb >> create_fdw >> t1 >> t2 >> end
