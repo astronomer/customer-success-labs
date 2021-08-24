@@ -26,9 +26,9 @@ def _upload_dynamic_query_to_s3(query, ds):
     counter = 0
     for db in db_list:
         if counter == 0:
-            sql += str(query(db, ds))
+            sql += str(query(db, ds, incremental=True))
         else:
-            sql += "union" + str(query(db, ds))
+            sql += "\nunion all\n" + str(query(db, ds, incremental=True))
         counter = counter+1
     S3._upload_sql_to_s3(
         ds=ds,
