@@ -38,7 +38,7 @@ In your browser, navigate to ```http://localhost:8080/```
 * `basic_task_groups` - A basic DAG showing Task Groups
 * `dynamic_task_groups_independent` - Creating dynamic Task Groups which do not depend on each other and can execute in parallel
 * `dynamic_task_groups_ordered` - Creating dynamic Task Groups which have strict dependencies in place
-* `imported_task_groups` - Importing Task Groups from a separate task_group_functions.py file to keep your DAG file clean and co`ncise
+* `imported_task_groups` - Importing Task Groups from a separate task_group_functions.py file to keep your DAG file clean and concise
 * `nested_task_groups` - Nesting multiple Task Groups within one another and setting dependencies
 
 
