@@ -7,7 +7,7 @@ Showcasing several ways to implement Airflow callbacks and notifications.
 Monitoring tasks and DAGs at scale can be cumbersome. Sometimes you'd like to be notified of certain events, and not others. These DAGs cover several methods of implementing custom e-mail, Slack, and Microsoft Teams notifications so you can be confident you aren't missing critical events that may require immediate attention.
 
 ## Slack Callback Exmaples
-![Example Callbacks](docs/images/notifcations.png)
+![Example Callbacks](https://github.com/astronomer/customer-success-labs/blob/main/airflow-callbacks/docs/images/notifications.png)
 
 ## Getting Started
 
