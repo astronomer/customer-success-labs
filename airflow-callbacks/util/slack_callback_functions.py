@@ -17,7 +17,7 @@ def dag_triggered_callback(context):
     slack_msg = f"""
             :airflow-new: DAG has been triggered. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -38,7 +38,7 @@ def dag_success_callback(context):
     slack_msg = f"""
             :airflow-new: DAG has succeeded. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -59,7 +59,7 @@ def success_callback(context):
     slack_msg = f"""
             :white_check_mark: Task has succeeded. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -86,7 +86,7 @@ def failure_callback(context):
     slack_msg = f"""
             :x: Task has failed. 
             *Task*: {context.get('task_instance').task_id}
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             *Exception*: {formatted_exception}
             <{log_url}| *Log URL*>
@@ -115,7 +115,7 @@ def retry_callback(context):
             :sos: Task is retrying.
             *Task*: {context.get('task_instance').task_id}
             *Try number:* {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}. 
-            *Dag*: {context.get('task_instance').dag_id}
+            *DAG*: {context.get('task_instance').dag_id}
             *Execution Time*: {context.get('execution_date')}
             *Exception*: {formatted_exception}
             <{log_url}| *Log URL*>
@@ -138,7 +138,7 @@ def slack_test(**kwargs):
     slack_msg = f"""
             :airflow-spin-new: This is a test for sending a slack message via a PythonOperator.
             *Task*: {context.get('task_instance').task_id}
-            *Dag*: {context.get('task_instance').dag_id}
+            *DAG*: {context.get('task_instance').dag_id}
             *Execution Time*: {context.get('execution_date')}
             <{log_url}| *Log URL*>
             """
