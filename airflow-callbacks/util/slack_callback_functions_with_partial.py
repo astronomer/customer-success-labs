@@ -17,7 +17,7 @@ def dag_triggered_callback(context, **kwargs):
     slack_msg = f"""
             :airflow-new: DAG has been triggered. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -38,7 +38,7 @@ def dag_success_callback(context, **kwargs):
     slack_msg = f"""
             :airflow-new: DAG has succeeded. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -59,7 +59,7 @@ def success_callback(context, **kwargs):
     slack_msg = f"""
             :white_check_mark: Task has succeeded. 
             *Task*: {context.get('task_instance').task_id}  
-            *Dag*: {context.get('task_instance').dag_id} 
+            *DAG*: {context.get('task_instance').dag_id} 
             *Execution Time*: {context.get('execution_date')}  
             <{log_url}| *Log URL*>
             """
@@ -84,13 +84,13 @@ def failure_callback(context, **kwargs):
                                    tb=exception.__traceback__)
     ).strip()
     slack_msg = f"""
-                :x: Task has failed. 
-                *Task*: {context.get('task_instance').task_id}
-                *Dag*: {context.get('task_instance').dag_id} 
-                *Execution Time*: {context.get('execution_date')}  
-                *Exception*: {formatted_exception}
-                <{log_url}| *Log URL*>
-                """
+            :x: Task has failed. 
+            *Task*: {context.get('task_instance').task_id}
+            *DAG*: {context.get('task_instance').dag_id} 
+            *Execution Time*: {context.get('execution_date')}  
+            *Exception*: {formatted_exception}
+            <{log_url}| *Log URL*>
+            """
     slack_alert = SlackWebhookOperator(
         task_id="slack_test",
         http_conn_id=slack_conn_id,
@@ -112,14 +112,14 @@ def retry_callback(context, **kwargs):
                                    tb=exception.__traceback__)
     ).strip()
     slack_msg = f"""
-                :sos: Task is retrying.
-                *Task*: {context.get('task_instance').task_id}
-                *Try number:* {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}. 
-                *Dag*: {context.get('task_instance').dag_id}
-                *Execution Time*: {context.get('execution_date')}
-                *Exception*: {formatted_exception}
-                <{log_url}| *Log URL*>
-                """
+            :sos: Task is retrying.
+            *Task*: {context.get('task_instance').task_id}
+            *Try number:* {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}. 
+            *DAG*: {context.get('task_instance').dag_id}
+            *Execution Time*: {context.get('execution_date')}
+            *Exception*: {formatted_exception}
+            <{log_url}| *Log URL*>
+            """
     slack_alert = SlackWebhookOperator(
         task_id="slack_test",
         http_conn_id=slack_conn_id,
@@ -138,7 +138,7 @@ def slack_test(**kwargs):
     slack_msg = f"""
             :airflow-spin-new: This is a test for sending a slack message via a PythonOperator.
             *Task*: {context.get('task_instance').task_id}
-            *Dag*: {context.get('task_instance').dag_id}
+            *DAG*: {context.get('task_instance').dag_id}
             *Execution Time*: {context.get('execution_date')}
             <{log_url}| *Log URL*>
             """
