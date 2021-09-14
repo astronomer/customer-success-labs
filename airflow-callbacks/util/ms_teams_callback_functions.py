@@ -9,7 +9,7 @@ def dag_triggered_callback(context):
     teams_msg = f"""
             DAG has been triggered.
             Task: {context.get('task_instance').task_id}  
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
             """
     teams_notification = MSTeamsWebhookOperator(
@@ -29,7 +29,7 @@ def dag_success_callback(context):
     teams_msg = f"""
             DAG has succeeded.
             Task: {context.get('task_instance').task_id}  
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
             """
     teams_notification = MSTeamsWebhookOperator(
@@ -49,7 +49,7 @@ def success_callback(context):
     teams_msg = f"""
             Task has succeeded. 
             Task: {context.get('task_instance').task_id}  
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
             """
     teams_notification = MSTeamsWebhookOperator(
@@ -75,7 +75,7 @@ def failure_callback(context):
     teams_msg = f"""
             Task has failed. 
             Task: {context.get('task_instance').task_id}  
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}
             Exception: {formatted_exception}
             """
@@ -103,7 +103,7 @@ def retry_callback(context):
             Task is retrying. 
             Task: {context.get('task_instance').task_id}
             Try number: {context.get('task_instance').try_number - 1} out of {context.get('task_instance').max_tries + 1}.
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
             Exception: {formatted_exception}
             """
@@ -125,7 +125,7 @@ def python_operator_callback(**kwargs):
     teams_msg = f"""
             This is a test for sending a MS Teams message via a PythonOperator.
             Task: {context.get('task_instance').task_id}  
-            Dag: {context.get('task_instance').dag_id} 
+            DAG: {context.get('task_instance').dag_id} 
             Execution Time: {context.get('execution_date')}  
             """
     teams_notification = MSTeamsWebhookOperator(
@@ -147,7 +147,7 @@ def sla_miss_callback(dag, task_list, blocking_task_list, slas, blocking_tis, *a
     teams_msg = f"""
             SLA has been missed.
             Task: {task_id}  
-            Dag: {dag_id} 
+            DAG: {dag_id} 
             Execution Time: {execution_date}  
             """
     hook = MSTeamsWebhookHook(
