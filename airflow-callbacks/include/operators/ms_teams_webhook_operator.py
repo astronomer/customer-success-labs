@@ -17,9 +17,11 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from airflow.providers.http.operators.http import SimpleHttpOperator
-from hooks.ms_teams_webhook_hook import MSTeamsWebhookHook
 import logging
+
+from airflow.providers.http.operators.http import SimpleHttpOperator
+
+from include.hooks.ms_teams_webhook_hook import MSTeamsWebhookHook
 
 
 class MSTeamsWebhookOperator(SimpleHttpOperator):

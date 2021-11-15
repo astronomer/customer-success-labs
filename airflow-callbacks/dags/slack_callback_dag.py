@@ -1,9 +1,10 @@
-from airflow import DAG
 import datetime
 from datetime import timedelta
-from airflow.operators.python import PythonOperator
-from airflow.operators.dummy import DummyOperator
+
+from airflow import DAG
 from airflow.operators.bash import BashOperator
+from airflow.operators.dummy import DummyOperator
+from airflow.operators.python import PythonOperator
 from util import slack_callback_functions
 
 default_args = {
