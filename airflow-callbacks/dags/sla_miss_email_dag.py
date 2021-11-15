@@ -1,8 +1,8 @@
-from airflow import DAG
-from airflow.operators.dummy import DummyOperator
-from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+from airflow.operators.dummy import DummyOperator
 
 # Default settings applied to all tasks
 default_args = {

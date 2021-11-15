@@ -1,5 +1,5 @@
-from operators.ms_teams_webhook_operator import MSTeamsWebhookOperator
-from hooks.ms_teams_webhook_hook import MSTeamsWebhookHook
+from include.operators.ms_teams_webhook_operator import MSTeamsWebhookOperator
+from include.hooks.ms_teams_webhook_hook import MSTeamsWebhookHook
 from airflow.operators.python import get_current_context
 import traceback
 
