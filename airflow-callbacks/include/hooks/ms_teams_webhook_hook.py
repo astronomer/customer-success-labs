@@ -17,8 +17,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from airflow.providers.http.hooks.http import HttpHook
 from airflow.exceptions import AirflowException
+from airflow.providers.http.hooks.http import HttpHook
 
 
 class MSTeamsWebhookHook(HttpHook):
